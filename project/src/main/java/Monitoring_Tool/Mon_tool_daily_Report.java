@@ -82,7 +82,7 @@ public class Mon_tool_daily_Report {
 				cell = worksheet.getRow(4).getCell(1);
 				cell.setCellValue(strText7 +" - "+strText9+" Crores");
 
-				montool_mod mt =  new montool_mod ();
+				Montool_dailyreports_modules mt =  new Montool_dailyreports_modules ();
 
 
 //mon.einvoice_mode_wise(driver, cell, worksheet, wb, fsIP, js);

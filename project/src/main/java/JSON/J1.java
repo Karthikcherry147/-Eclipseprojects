@@ -40,8 +40,8 @@ public class J1 {
             file.flush();
             file.close();
 
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+         
         }
 
     }
