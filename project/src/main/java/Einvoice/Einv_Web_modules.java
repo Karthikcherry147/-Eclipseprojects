@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class Einv_Web_modules {
 	ArrayList<String> check =new ArrayList<String>() ;
 	 String flag ;
 
+	@SuppressWarnings("unused")
 	public void taxpyer_search(WebDriver driver) throws InterruptedException
 	{
 		driver.get("https://einvoice1.gst.gov.in/Others/TaxpayerSearch");
@@ -41,11 +43,22 @@ String str = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[3]/form[1]
 
 if(str.contains("JSW STEEL LTD"))
 {
-	System.out.println("Taxpayer profile is Working");
+	
 	driver.findElement(By.xpath("//button[contains(text(),'Update from GST Common Portal')]")).click();
-	Alert alert =driver.switchTo().alert();
-	alert.dismiss();
-	Thread.sleep(5000);
+	Alert alert = driver.switchTo().alert();
+	String alertMessage = driver.switchTo().alert().getText();
+	alert.accept();
+	Thread.sleep(2000);
+	String alertMessage1 = driver.switchTo().alert().getText();
+	alert.accept();
+	
+	if(alertMessage1.contains("Updated successfully"))
+	{
+		System.out.println("Taxpayer profile is Working");
+	}else
+	{
+		System.out.println("Taxpayer profile is not Working ");
+	}
 }
 else
 {
@@ -65,7 +78,7 @@ else
 driver.findElement(By.xpath("//button[contains(text(),'Go')]")).click();
 String str = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[3]/form[1]/div[1]/div[2]/div[2]/table[1]/tbody[1]/tr[2]/td[4]")).getText();
 
-if(str.contains("e-Invoicing from, '01-Oct-2020'"))
+if(str.contains("This taxpayer is enabled for e-Invoicing as his/her Aggregate Annual Turnover(AATO) is above Rs 500 Crores"))
 {
 	System.out.println("Einvoice Status is Working");
 
@@ -442,29 +455,49 @@ public void Login(String id, String pwd,String cap , WebDriver driver ) throws I
 		{
 		  try
 		  {
-			  JavascriptExecutor js = (JavascriptExecutor) driver;
-				WebElement e1 = driver.findElement(By.xpath("//button[@id='btnLogin']"));
-				js.executeScript("arguments[0].click();", e1);
-				Thread.sleep(1000);
-				driver.findElement(By.xpath("//input[@id='txtUserName']")).sendKeys(id);
-				Thread.sleep(1000);
-				driver.findElement(By.xpath("//input[@id='txt_password']")).sendKeys(pwd);
-				Thread.sleep(1000);
-				driver.findElement(By.xpath("//input[@id= 'CaptchaCode']")).sendKeys(cap);
-				driver.findElement(By.xpath("/html[1]/body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[1]/div[4]/div[5]/button[1]")).click();
-				String w1 = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[2]/h4[1]")).getText();
+			  try
+			  {
+				  JavascriptExecutor js = (JavascriptExecutor) driver;
+					WebElement e1 = driver.findElement(By.xpath("//button[@id='btnLogin']"));
+					js.executeScript("arguments[0].click();", e1);
+					Thread.sleep(1000);
+					driver.findElement(By.xpath("//input[@id='txtUserName']")).sendKeys(id);
+					Thread.sleep(1000);
+					driver.findElement(By.xpath("//input[@id='txt_password']")).sendKeys(pwd);
+					Thread.sleep(1000);
+					driver.findElement(By.xpath("//input[@id= 'CaptchaCode']")).sendKeys(cap);
+					driver.findElement(By.xpath("/html[1]/body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[1]/div[4]/div[5]/button[1]")).click();
+					String w1 = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[2]/h4[1]")).getText();
 
-				System.out.print(w1);
-			if ( w1.contains("Dash Board"))
-			{
-				System.out.println("login Successfully");
-			}else
-			{
+					System.out.print(w1);
+				if ( w1.contains("Dash Board"))
+				{
+					System.out.println("login Successfully");
+				}else
+				{
 
-			}
+				}
+			  }catch(Exception e)
+			  {
+				  Alert alert =driver.switchTo().alert();
+					alert.accept();
+					Thread.sleep(2000);
+					 LocalDateTime myObj = LocalDateTime.now();
+					    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyMMdd");
+					    String formattedDate = myObj.format(myFormatObj);
+								
+					driver.findElement(By.id("txtOtp")).sendKeys(formattedDate);
+					Thread.sleep(500);
+					driver.findElement(By.id("btnVerifyOTP")).click();
+			  }
+
+			 
 		  }catch(Exception e)
 		  {
 			  System.out.println("Login failed ");
+			  
+			  
+			  
 		  }
 
 		Thread.sleep(1000);
@@ -486,14 +519,14 @@ public void CreateJSON() throws FileNotFoundException, IOException, ParseExcepti
 			  for (Object o : a)
 			  {
 		        person = (JSONObject) o;
-			    System.out.println(" test " + person.toString());
+			   // System.out.println(" test " + person.toString());
 			  }
 			  JSONObject employeeObject = (JSONObject) person.get("DocDtls");
 			  String firstName = (String) employeeObject.get("No");
-	          System.out.println(firstName);
+	         // System.out.println(firstName);
 			  String plainPayload = person.toJSONString();
 			  plainPayload=plainPayload.replace(firstName,"N"+presenttime);
-			  System.out.println(plainPayload);
+			 // System.out.println(plainPayload);
 			  String jsonString = "["+plainPayload.toString()+"]";
 			  FileWriter file = new FileWriter("C:\\Users\\DELL\\Desktop\\WorkSpace\\Selenium\\All Zones JSON\\e_Invoice_2020.json" );
 			  file.write(jsonString);
@@ -554,7 +587,7 @@ public void Ewaybill(String dist, WebDriver driver) throws InterruptedException
 
 		  String rows1 = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/form[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[last()]/td[2]")).getText();
 
-		  System.out.println(rows1);
+		//  System.out.println(rows1);
 
 		  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/form[1]/div[1]/div[4]/div[2]/input[2]")).click();
 		  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/form[1]/div[1]/div[4]/div[4]/input[1]")).sendKeys(rows1);
@@ -649,7 +682,7 @@ public void PasteCNLIRNTest(WebDriver driver, Actions actions ) throws Interrupt
 	 }
 
 	 public void Quit(WebDriver driver) {
-	 driver.quit();
+	driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/ul[1]/li[1]/a[1]/i[1]")).click();
 	 }
 		public void Home_In(WebDriver driver) {
 			 driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/a[1]/i[1]")).click();

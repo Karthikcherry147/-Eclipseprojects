@@ -32,23 +32,23 @@ public class Einvoice_Web {
 		Actions actions = new Actions(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 
-//		//einv.HomeButton(driver);
-//				einv.taxpyer_search(driver);
-//				//einv.HomeButton(driver);
-//				einv.Einvoice_eligible_Status(driver);
-//				//einv.HomeButton(driver);
-//		        einv.Verify_Signed_invoice(driver, js, "C:/Users/DELL/Desktop/WorkSpace/Selenium/All Zones JSON/eInv_112316398914408.JSON");
-//		    	//einv.HomeButton(driver);
-//		        einv.Master_Codes(driver, js);
-//		       // einv.HomeButton(driver);
+		//einv.HomeButton(driver);
+				einv.taxpyer_search(driver);
+				//einv.HomeButton(driver);
+				einv.Einvoice_eligible_Status(driver);
+				//einv.HomeButton(driver);
+		        einv.Verify_Signed_invoice(driver, js, "C:/Users/DELL/Desktop/WorkSpace/Selenium/All Zones JSON/eInv_112316398914408.JSON");
+		    	//einv.HomeButton(driver);
+		        einv.Master_Codes(driver, js);
+		       // einv.HomeButton(driver);
+
+		        einv.GSP_ERP_List(driver, js);
+		        einv.Pincode(driver, js);
+		       // einv.HomeButton(driver);
+		        einv.Pin_pin(driver, js);
+		       // einv.HomeButton(driver);
 //
-//		        einv.GSP_ERP_List(driver, js);
-//		        einv.Pincode(driver, js);
-//		       // einv.HomeButton(driver);
-//		        einv.Pin_pin(driver, js);
-//		       // einv.HomeButton(driver);
-//
-//////				einv.einvocie_enable(driver, js);
+		//	einv.einvocie_enable(driver, js);
 //////		        einv.einvocie_Registration(driver, js);
 		        einv.forgot_Username(driver, js);
 		        einv.forgot_password(driver, js);
@@ -71,7 +71,7 @@ public class Einvoice_Web {
 		        einv.Home_In(driver);
 		        einv.PasteCNLIRNTest(driver, actions);
 		        Thread.sleep(2000);
-		     //   einv.Quit(driver);
+		       einv.Quit(driver);
 
 
 

@@ -311,8 +311,6 @@ if(rows.size()>=2)
 				Thread.sleep(2000);
 				driver.navigate().back();
 				Mstr.Home(driver);
-
-
 			}
 			}else
 			{

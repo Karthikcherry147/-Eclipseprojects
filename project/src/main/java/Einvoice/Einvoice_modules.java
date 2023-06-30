@@ -64,7 +64,7 @@ public class Einvoice_modules {
 	{
 	
 		// Current date and time
-		System.out.println(path1);
+		//System.out.println(path1);
 				LocalDateTime myObj1 = LocalDateTime.now();
 				DateTimeFormatter datetime = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss");
 				String presenttime = myObj1.format(datetime);
@@ -77,14 +77,14 @@ public class Einvoice_modules {
 				  for (Object o : a)
 				  {
 			        person = (JSONObject) o;
-				    System.out.println(" test " + person.toString());
+				//    System.out.println(" test " + person.toString());
 				  }
 				  JSONObject employeeObject = (JSONObject) person.get("DocDtls");
 				  String firstName = (String) employeeObject.get("No");
-		          System.out.println(firstName);
+		        //  System.out.println(firstName);
 				  String plainPayload = person.toJSONString();
 				  plainPayload=plainPayload.replace(firstName,"N"+presenttime);
-				  System.out.println(plainPayload);
+				 // System.out.println(plainPayload);
 				  String jsonString = "["+plainPayload.toString()+"]";
 				  FileWriter file = new FileWriter(path1);
 				  file.write(jsonString);
@@ -98,6 +98,7 @@ public class Einvoice_modules {
 		  {
 
 			  JavascriptExecutor js = (JavascriptExecutor) driver;
+			  
 				WebElement e1 = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[1]/nav[1]/div[2]/ul[1]/li[1]/a[1]"));
 				js.executeScript("arguments[0].click();", e1);
 				Thread.sleep(1000);
@@ -123,6 +124,15 @@ if(str.contains("0"))
 	  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[1]/form[1]/div[6]/div[1]/div[1]/div[2]/div[1]/a[2]")).click();
 	  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[1]/form[1]/div[6]/div[1]/div[1]/div[2]/div[1]/a[3]")).click();
 	  System.out.println("IRN Generated Successfully");
+//	    Actions actions = new Actions(driver);
+//	  WebElement e12 =  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[1]/form[1]/div[6]/div[1]/div[1]/div[2]/div[2]/table[1]/tbody[1]/tr[2]/td[8]"));
+//	    actions.moveToElement(e12).doubleClick().build().perform();
+//	    actions.keyDown(Keys.CONTROL);
+//        actions.sendKeys("c");
+//        actions.keyUp(Keys.CONTROL);
+//        actions.build().perform();
+//        Thread.sleep(1000);
+
 
 }check.add(String.valueOf(sucs));
 
@@ -170,6 +180,17 @@ if(str.contains("0"))
 	  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[1]/form[1]/div[6]/div[1]/div[1]/div[2]/div[1]/a[3]")).click();
 	  Thread.sleep(2000);
 	  System.out.println("IRN Generated Successfully");
+	  Thread.sleep(2000);
+	  js.executeScript("window.scrollBy(0,2000)", "");
+	  WebElement e12 =  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[1]/form[1]/div[6]/div[1]/div[1]/div[2]/div[2]/table[1]/tbody[1]/tr[2]/td[8]"));
+	  Actions actions = new Actions(driver); 
+	  actions.moveToElement(e12).doubleClick().build().perform();
+	    actions.keyDown(Keys.CONTROL);
+      actions.sendKeys("c");
+      actions.keyUp(Keys.CONTROL);
+      actions.build().perform();
+      Thread.sleep(1000);
+      
 
 }check.add(String.valueOf(sucs));
 
@@ -223,7 +244,7 @@ if(str.contains("0"))
 
 			  String rows1 = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/form[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[last()]/td[2]")).getText();
 
-			  System.out.println(rows1);
+			//  System.out.println(rows1);
 
 			  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/form[1]/div[1]/div[4]/div[2]/input[2]")).click();
 			  driver.findElement(By.xpath("/html[1]/body[1]/div[2]/form[1]/div[1]/div[4]/div[4]/input[1]")).sendKeys(rows1);
@@ -269,7 +290,7 @@ if(str.contains("0"))
 
 
 
-	  public void Login(String id, String pwd,String cap , WebDriver driver ) throws InterruptedException
+	  public void Login(String id, String pwd,String cap , WebDriver driver , String Zone ) throws InterruptedException
 		{
 		  try
 		  {
@@ -289,7 +310,7 @@ if(str.contains("0"))
 				//System.out.print(w1);
 			if ( w1.contains("Dash Board"))
 			{
-				System.out.println("login Successfully");
+				System.out.println(Zone + "  login Successfully");
 				 sucs=true;
 			}else
 			{
@@ -340,11 +361,12 @@ if(str.contains("0"))
 				abc= driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/table[1]/thead[1]/tr[1]/th[1]")).getText();
 				//System.out.println(abc);
 				}
-					if(abc.contains("37BZNPM9430M1KL"))
+					if(abc.contains("BZNPM9430M"))
 					{
 
 						driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[2]/textarea[1]")).sendKeys("test");
 						WebElement Q4 = driver.findElement(By.xpath("//button[@id='btnSubmit']"));
+						Thread.sleep(2000);
 						JavascriptExecutor js = (JavascriptExecutor) driver;
 						js.executeScript("arguments[0].click();", Q4);
 						String Cancel = null;
@@ -352,23 +374,22 @@ if(str.contains("0"))
 						{
 							Cancel = driver.findElement(By.cssSelector("#btnDownload")).getText();
 							System.out.println(Cancel);
-
+							if(Cancel.contains("Download Response Json"))
+							{
+								System.out.println("IRN Cancellation is working fine");
+								sucs=true;
+							}
+							else
+							{
+								driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/a[1]/i[1]")).click();
+								System.out.println("IRN Cancellation is not working");
+								sucs=false;
+							}
 						}catch(Exception e)
 						{
 							Cancel = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/table[1]/thead[1]/tr[1]/th[1]")).getText();
 						}
-						if(Cancel.contains("Download Response Json"))
-						{
-							System.out.println("IRN Cancellation is working fine");
-							sucs=true;
-						}
-						else
-						{
-							driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/a[1]/i[1]")).click();
-							System.out.println("IRN Cancellation is not working");
-							sucs=false;
-						}
-
+			
 			}
 					else
 			{

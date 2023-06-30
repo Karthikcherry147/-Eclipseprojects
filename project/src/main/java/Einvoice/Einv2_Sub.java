@@ -649,7 +649,7 @@ public class Einv2_Sub {
 		 }
 
 		 public void Quit(WebDriver driver) {
-		 driver.quit();
+			 driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/ul[1]/li[1]/a[1]/i[1]")).click();
 		 }
 			public void Home_In(WebDriver driver) {
 				 driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/a[1]/i[1]")).click();
